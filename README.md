@@ -18,7 +18,6 @@ Truffle 提供了一個內置的個人模擬區塊鏈
 
 [truffle unbox react](https://www.trufflesuite.com/boxes/react)
 
-
 `truffle compile`  
 ===========================
 > Compiling .\contracts\Migrations.sol
@@ -40,4 +39,18 @@ npm run start
 
 ## truffle test
 
+truffle compile
+truffle test
+
 [Checking events when testing Solidity smart contracts with Truffle](https://kalis.me/check-events-solidity-smart-contract-test-truffle/)
+
+`npm install --save-dev chai truffle-assertions`  
+`npm i ganache-cli web3`
+
+[Mnemonic Code Converter](https://iancoleman.io/bip39/#english) 記得選幣別
+
+
+> Error: Could not find artifacts for LuckyGun from any sources
+注意合約名稱
+
+[Mappings + Arrays in Solidity Explained](https://medium.com/upstate-interactive/mappings-arrays-87afc697e64f)
