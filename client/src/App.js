@@ -5,7 +5,16 @@ import getWeb3 from "./getWeb3";
 import "./App.css";
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  constructor(props) {
+    super(props);
+    this.state = {
+      storageValue: 0,
+      web3: null,
+      accounts: null,
+      contract: null,
+      message: '',
+    };
+  }
 
   componentDidMount = async () => {
     try {
@@ -20,7 +29,7 @@ class App extends Component {
       const deployedNetwork = SimpleStorageContract.networks[networkId];
       const instance = new web3.eth.Contract(
         SimpleStorageContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
@@ -29,7 +38,7 @@ class App extends Component {
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
+        `Failed to load web3, accounts, or contract. Check console for details.`
       );
       console.error(error);
     }
@@ -37,6 +46,7 @@ class App extends Component {
 
   runExample = async () => {
     const { accounts, contract } = this.state;
+    this.setState({ message: '参与抽奖中，请稍后...！'});
 
     // Stores a given value, 5 by default.
     await contract.methods.set(5).send({ from: accounts[0] });
@@ -52,8 +62,10 @@ class App extends Component {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
+    const { message } = this.state;
     return (
       <div className="App">
+        <h3 className="message">{message}</h3>
         <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
         <h2>Smart Contract Example</h2>
