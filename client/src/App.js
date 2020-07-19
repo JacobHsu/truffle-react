@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import SrcContract from "./contracts/LuckyGun.json";
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
@@ -8,33 +8,42 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      amount: '0.1',
       storageValue: 0,
       web3: null,
       accounts: null,
       contract: null,
       message: '',
+      loading: false,
+      owner: '',
+      isOwner: false
     };
   }
 
+
   componentDidMount = async () => {
+    
     try {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
+      const account = accounts[0];
+      // const isOwner = owner === account ? true : false;
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
-      const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
+      const deployedNetwork = SrcContract.networks[networkId];
+      const contract = new web3.eth.Contract(
+        SrcContract.abi,
         deployedNetwork && deployedNetwork.address
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: contract }, this.runExample);
+      // this.setState({ web3, accounts, contract: contract });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -45,17 +54,34 @@ class App extends Component {
   };
 
   runExample = async () => {
-    const { accounts, contract } = this.state;
-    this.setState({ message: '参与抽奖中，请稍后...！'});
+
+    const { accounts, amount, contract, web3 } = this.state;
+    
+    try {
+      this.setState({ message: '参与抽奖中，请稍后...', loading: true });
+
+      await contract.methods.bet().send({
+        from: accounts[0],
+        value: web3.utils.toWei(amount, 'ether'),
+      });
+
+      this.setState({ message: '参与成功！', loading: false });
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1000);
+    } catch (err) {
+      console.error(err);
+      this.setState({ message: err.message || err.toString(), loading: false });
+    }
 
     // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    // await contract.methods.set(5).send({ from: accounts[0] });
 
     // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+    // const response = await contract.methods.get().call();
 
     // Update state with the result.
-    this.setState({ storageValue: response });
+    // this.setState({ storageValue: response });
   };
 
   render() {
@@ -76,7 +102,7 @@ class App extends Component {
         <p>
           Try changing the value stored on <strong>line 40</strong> of App.js.
         </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        {/* <div>The stored value is: {this.state.storageValue}</div> */}
       </div>
     );
   }

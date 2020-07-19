@@ -36,6 +36,22 @@ Truffle 提供了一個內置的個人模擬區塊鏈
 cd client
 npm run start
 ```
+## dapp debug
+
+> Unhandled Rejection (Error): This contract object doesn't have address set yet, please set an address first.
+
+need `truffle migrate`  
+
+fix 2_deploy_contracts.js sol
+
+truffle-config.js
+```
+    development: {
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*"
+    },
+```
 
 ## truffle test
 
