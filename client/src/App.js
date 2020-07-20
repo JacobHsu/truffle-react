@@ -4,6 +4,7 @@ import getWeb3 from "./getWeb3";
 
 import "./App.css";
 import Clock from "./components/Clock";
+import RoomTabs from './components/RoomTabs';
 
 class App extends Component {
   constructor(props) {
@@ -92,6 +93,7 @@ class App extends Component {
       <div className="App">
         <h3 className="message">{message}</h3>
         <Clock />
+        <RoomTabs tasks= { ["0x01","0x02","0x03"] }/>
         <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
         <h2>Smart Contract Example</h2>
