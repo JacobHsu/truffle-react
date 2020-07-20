@@ -52,6 +52,11 @@ truffle-config.js
       network_id: "*"
     },
 ```
+> Could not connect to your Ethereum client with the following parameters:
+    - host       > 127.0.0.1
+    - port       > 8545
+
+need `truffle develop`
 
 ## truffle test
 

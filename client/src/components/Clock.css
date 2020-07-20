@@ -1,0 +1,8 @@
+.clock {
+  zoom: 0.5;
+  -moz-transform: scale(0.5);
+}
+
+.flip-clock-label {
+  display: none;
+}

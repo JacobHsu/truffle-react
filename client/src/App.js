@@ -3,6 +3,7 @@ import SrcContract from "./contracts/LuckyGun.json";
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
+import Clock from "./components/Clock";
 
 class App extends Component {
   constructor(props) {
@@ -29,8 +30,6 @@ class App extends Component {
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-      const account = accounts[0];
-      // const isOwner = owner === account ? true : false;
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
@@ -42,8 +41,8 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: contract }, this.runExample);
-      // this.setState({ web3, accounts, contract: contract });
+      // this.setState({ web3, accounts, contract: contract }, this.runExample);
+      this.setState({ web3, accounts, contract: contract });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -92,6 +91,7 @@ class App extends Component {
     return (
       <div className="App">
         <h3 className="message">{message}</h3>
+        <Clock />
         <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
         <h2>Smart Contract Example</h2>
