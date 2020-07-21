@@ -14,7 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  console.log(props)
+
   return (
     <div
       role="tabpanel"
@@ -48,7 +48,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "#282c34", //theme.palette.background.paper,
+    backgroundColor: "#282c34",
   },
   listSection: {
     backgroundColor: 'inherit',
@@ -90,6 +90,10 @@ export default function SimpleTabs(props) {
       </StyledBadge>
     );
   }
+  
+  let tabStyle = {
+    minWidth: 110
+  };
 
   return (
     <div className={classes.root}>
@@ -100,17 +104,17 @@ export default function SimpleTabs(props) {
           indicatorColor="primary"
           aria-label="simple tabs example"
         >
-          <Tab label={showBadge(0.1, participants)} {...a11yProps(0)} />
-          <Tab label={showBadge(1, 1)} {...a11yProps(1)} />
-          <Tab label={showBadge(5, 0)} {...a11yProps(2)} />
+          <Tab label={showBadge(0.1, participants)} {...a11yProps(0)} style={tabStyle} />
+          <Tab label={showBadge(1, 1)} {...a11yProps(1)} style={tabStyle} />
+          <Tab label={showBadge(5, 0)} {...a11yProps(2)} style={tabStyle} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         Item One
         <List className={classes.root} subheader={<li />}>
-          {totalArr.map((sectionId) => (
-            <li key={`section-${sectionId}`} className={classes.listSection}>
-              <ListItem key={`item-${sectionId}`}>
+          {totalArr.map((sectionId,index) => (
+            <li key={`section-${sectionId}-${index}`} className={classes.listSection}>
+              <ListItem key={`item-${sectionId}-${index}`}>
                 <ListItemText primary={`${sectionId}`} style={{ color: '#FFFFFF' }} />
               </ListItem>
             </li>

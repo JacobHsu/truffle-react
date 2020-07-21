@@ -57,6 +57,7 @@ truffle-config.js
     - port       > 8545
 
 need `truffle develop`
+連接至本地主機 8545
 
 ## truffle test
 
